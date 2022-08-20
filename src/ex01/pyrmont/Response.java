@@ -31,6 +31,11 @@ public class Response {
     byte[] bytes = new byte[BUFFER_SIZE];
     FileInputStream fis = null;
     try {
+      // 成功返回 html 文件时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
+      String okMessage = "HTTP/1.1 200 ok\r\n" +
+              "Content-Type: text/html\r\n" +
+              "\r\n";
+      output.write(okMessage.getBytes());
       File file = new File(HttpServer.WEB_ROOT, request.getUri());
       if (file.exists()) {
         fis = new FileInputStream(file);
