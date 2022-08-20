@@ -12,6 +12,10 @@ public class PrimitiveServlet implements Servlet {
     throws ServletException, IOException {
     System.out.println("from service");
     PrintWriter out = response.getWriter();
+    // 成功返回时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
+    String okMessage = "HTTP/1.1 200 ok\r\n" +
+            "\r\n";
+    out.print(okMessage);
     out.println("Hello. Roses are red.");
     out.print("Violets are blue.");
   }
