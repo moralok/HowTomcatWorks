@@ -30,11 +30,6 @@ public class Response implements ServletResponse {
     byte[] bytes = new byte[BUFFER_SIZE];
     FileInputStream fis = null;
     try {
-      // 成功返回 html 文件时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
-      String okMessage = "HTTP/1.1 200 ok\r\n" +
-              "Content-Type: text/html\r\n" +
-              "\r\n";
-      output.write(okMessage.getBytes());
       /* request.getUri has been replaced by request.getRequestURI */
       File file = new File(Constants.WEB_ROOT, request.getUri());
       fis = new FileInputStream(file);
@@ -45,6 +40,11 @@ public class Response implements ServletResponse {
            [ message-body ]
          Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
       */
+      // 成功返回 html 文件时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
+      String okMessage = "HTTP/1.1 200 ok\r\n" +
+              "Content-Type: text/html\r\n" +
+              "\r\n";
+      output.write(okMessage.getBytes());
       int ch = fis.read(bytes, 0, BUFFER_SIZE);
       while (ch!=-1) {
         output.write(bytes, 0, ch);

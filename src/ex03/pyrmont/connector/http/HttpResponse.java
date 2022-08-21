@@ -87,8 +87,8 @@ public class HttpResponse implements HttpServletResponse {
   /**
    * call this method to send headers and response to the output
    */
-  public void finishResponse() {
-    // sendHeaders();
+  public void finishResponse() throws IOException {
+    sendHeaders();
     // Flush and close the appropriate output mechanism
     if (writer != null) {
       writer.flush();
@@ -315,6 +315,11 @@ public class HttpResponse implements HttpServletResponse {
            [ message-body ]
          Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
       */
+      // 成功返回 html 文件时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
+      String okMessage = "HTTP/1.1 200 ok\r\n" +
+              "Content-Type: text/html\r\n" +
+              "\r\n";
+      output.write(okMessage.getBytes());
       int ch = fis.read(bytes, 0, BUFFER_SIZE);
       while (ch!=-1) {
         output.write(bytes, 0, ch);
