@@ -288,6 +288,7 @@ final class HttpProcessor
     synchronized void assign(Socket socket) {
 
         // Wait for the Processor to get the previous Socket
+        // 什么场景会有多个线程获取到HttpProcessor实例呢？获取的方法不是加synchronized吗？还是说只是设计上以防万一，搭配当前的调用方式，实际上不会发生？
         while (available) {
             try {
                 wait();
@@ -312,6 +313,8 @@ final class HttpProcessor
     /**
      * Await a newly assigned Socket from our Connector, or <code>null</code>
      * if we are supposed to shut down.
+     *
+     * 书中提到为了this.socket可以在当前socket被处理完成前被分配下一个socket，可是在完成前，processor都不会被放回stack啊
      */
     private synchronized Socket await() {
 
