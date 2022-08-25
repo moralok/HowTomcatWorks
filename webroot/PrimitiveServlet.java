@@ -12,7 +12,7 @@ public class PrimitiveServlet implements Servlet {
     throws ServletException, IOException {
     System.out.println("from service");
     PrintWriter out = response.getWriter();
-    // 成功返回时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效
+    // 前两个章节中成功返回时，需要正确设置返回结果的格式，否则浏览器会提示发送的响应无效。在后续的章节中会处理sendHeader，因此不需要。
     String okMessage = "HTTP/1.1 200 ok\r\n" +
             "\r\n";
     out.print(okMessage);
