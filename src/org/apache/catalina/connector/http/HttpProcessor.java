@@ -87,6 +87,7 @@ final class HttpProcessor
 
     /**
      * Is there a new socket available?
+     * 初看以为是表示 HttpProcessor 是否可用，感觉很奇怪，看到注解才理解
      */
     private boolean available = false;
 
@@ -327,6 +328,7 @@ final class HttpProcessor
         }
 
         // Notify the Connector that we have received this Socket
+        // 书上说使用局部变量可以允许在 Socket 处理完之前，继续接收 Socket 对象，可是 HttpProcessor 要在处理完才能放回 stack 中啊
         Socket socket = this.socket;
         available = false;
         notifyAll();
