@@ -15,34 +15,17 @@ public class Request {
     public void parse() {
         // Read a set of characters from the socket
         StringBuffer request = new StringBuffer(2048);
-        // int i;
-        // byte[] buffer = new byte[2048];
-        // try {
-        //     i = input.read(buffer);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        //     i = -1;
-        // }
-        // for (int j = 0; j < i; j++) {
-        //     request.append((char) buffer[j]);
-        // }
-
-        int i = 0;
+        int i;
         byte[] buffer = new byte[2048];
-        while (i != -1) {
-            try {
-                i = input.read(buffer);
-                System.out.println("read: " + i);
-            } catch (IOException e) {
-                e.printStackTrace();
-                i = -1;
-            }
-            for (int j = 0; j < i; j++) {
-                request.append((char) buffer[j]);
-            }
+        try {
+            i = input.read(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+            i = -1;
         }
-
-
+        for (int j = 0; j < i; j++) {
+            request.append((char) buffer[j]);
+        }
         System.out.print(request);
         uri = parseUri(request.toString());
     }
